@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="ProgIII" content="width=device-width, initial-scale=1.0">
+    <title>Cinediscovery</title>
+    <style>
+/* Estilos CSS */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: rgb(23, 24, 25);
+    color: white;
+}
+
+/* Estilos para o elemento header */
+header {
+    background-color: #0f0f0f;
+    color: #fff;
+    padding: 20px;
+    position: relative; /* Torna o header um contexto de posicionamento para o nav */
+}
+
+/* Estilos para o elemento nav */
+nav {
+    position: absolute; /* Posicionamento absoluto em relação ao header */
+    top: 20px; /* Distância do topo do header */
+    right: 20px; /* Distância da direita do header */
+}
+
+/* Estilos para os links dentro do nav */
+nav a {
+    color:#f1f587; /* Cor do texto dos links */
+    text-decoration:underline; /* Remover sublinhado dos links */
+    margin-left: 10px; /* Margem esquerda entre os links */
+    border-radius: 5px; /* Bordas arredondadas */
+    font-size: 15px;
+}
+
+/* Estilos para os links quando passar o mouse por cima */
+nav a:hover {
+    background-color: #555; /* Cor de fundo ao passar o mouse por cima */
+}
+
+
+main {
+    padding: 5px;
+}
+
+.apresentacao {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.apresentacao .imagens-apresentacao {
+    position: relative;
+    overflow: hidden;
+    width: 15%;
+    margin-bottom: 20px;
+    border: solid white;
+    height: auto;
+}
+
+.apresentacao img {
+    width: 100%;
+    height: auto;
+    transition: opacity 0.3s ease; /* Transição suave para a imagem */
+}
+
+.apresentacao .texto-imagem {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Fundo escuro para o texto */
+    color: white;
+    opacity: 0; /* Inicialmente oculta */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.3s ease; /* Transição suave para o texto */
+    text-align: center;
+}
+
+.apresentacao .imagens-apresentacao:hover .texto-imagem {
+    opacity: 1; /* Mostra o texto quando o contêiner é hover */
+}
+
+.apresentacao .imagens-apresentacao:hover img {
+    opacity: 0.5; /* Diminui a opacidade da imagem quando o contêiner é hover */
+}
+
+#conteudo,
+#login,
+#dados {
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+button {
+    padding: 8px 16px;
+    cursor: pointer;
+}
+
+h1 {
+    text-align: center;
+    color: #f1f587;
+}
+
+
+#sugerir {
+    margin-top: 10px;
+    border-radius: 10px;
+    border: solid white;
+    display: inline-block;
+    width: 80%;
+    max-width: 600px;
+    margin: 10px auto;
+    padding: 10px;
+    border-radius: 5px;
+    margin-left: 15%;
+    margin-right: 40%;
+    height: 350px;
+}
+
+.filmeSugerido {
+    border-bottom: 1px solid #060606;
+    padding: 10px 0;
+    display: inline-block;
+    align-items: center;
+    width: calc(25% - 20px);
+    margin-right: 20px;
+    vertical-align: top;
+    flex-direction: column;
+}
+
+.imagem-filme {
+    width: 50px;
+    height: 50px;
+}
+.filmeSugerido img{
+    width: 200px;
+    height: 300px;
+}
+
+.filmeSugerido .conteudo{
+    flex:1;
+}
+
+.filmeSugerido .acoes button {
+    padding: 8px 16px;
+    margin-right: 5px;
+    background-color: #f1f587;
+    color: #333;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.filmeSugerido h3 {
+    color: black; /* Cor do texto */
+    background-color: #f1f587;
+    font-size: 20px; /* Tamanho da fonte */
+    margin-bottom: 10px; /* Espaçamento inferior */
+    border-radius: 5px;
+}
+
+
+/* Estilos para os botões de ação quando passar o mouse por cima */
+.filmeSugerido .acoes button:hover {
+    background-color: #414040;}
+
+.filmeSugerido:last-child {
+    border-bottom: none;
+}
+
+button[type="submit"] {
+    display: block;
+    text-align: center;
+    width: 20%;
+    margin: auto;
+    margin-bottom: 50px;
+    background-color: #f1f587;
+}
+
+#sair {
+    display: block;
+    margin: 0 auto;
+    margin-top: auto;
+}
+
+
+@media only screen and (max-width: 768px) {
+    .imagens-apresentacao img{
+        width: 90%;
+        max-width: 150px; 
+        height: auto;
+    }
+
+    .apresentacao {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .modal-content{
+        width: 90%;
+    }
+ 
+}
+
+#sugerir {
+    display: block;
+    margin: 20px auto; /* Centraliza vertical e horizontalmente */
+    border-radius: 5px;
+    padding: 10px 20px;
+    background-color: rgb(23, 24, 25); /* Cor de fundo */
+    color: #f1f587; /* Cor do texto */
+    cursor: pointer;
+    font-size: 35px;
+    border: solid rgb(23, 24, 25);
+}
+
+#sugerir-container {
+    text-align: center; /* Centraliza o conteúdo horizontalmente */
+    position: relative; /* Define a posição relativa para permitir posicionamento absoluto da imagem */
+}
+
+#icone-sugestao {
+    position: absolute; /* Define a posição absoluta para a imagem */
+    bottom: 70px;
+    left: 50%; /* Posiciona a imagem no centro horizontal do contêiner do botão */
+    transform: translateX(-50%); /* Centraliza a imagem horizontalmente */
+    width: 80px; /* Ajusta a largura da imagem */
+    height: 80px; /* Ajusta a altura da imagem */
+}
+
+.imagem-filme {
+    position: relative;
+    height: auto;
+    width: 10px;
+}
+
+/* CSS para o modal */
+.modal {
+    display: none; /* Oculta por padrão */
+    position: fixed; /* Fica posicionado fixamente */
+    z-index: 1; /* Coloca o modal acima de todo o conteúdo */
+    left: 0;
+    top: 0;
+    width: 100%; /* Largura total */
+    height: 100%; /* Altura total */
+    background-color: rgba(0, 0, 0, 0.4); /* Cor de fundo preta com transparência */
+    text-align: center;
+    border-radius: 20%;
+}
+
+.modal-content {
+    background-color: #060606;
+    margin: 10% auto; /* Centraliza vertical e horizontalmente */
+    padding: 20px;
+    border: 1px solid white;
+    width: 30%; 
+    text-align: center;
+
+}
+
+.modal-content input[type="text"],
+.modal-content input[type="number"],
+.modal-content select
+{
+    width: 80%; /* Ocupar 100% do espaço disponível */
+    margin-bottom: 15px; /* Espaçamento inferior entre os elementos */
+    display: block; /* Exibir em bloco, um embaixo do outro */
+    border-radius: 5%;
+    padding: 5px;  
+    margin: 5% auto;
+   
+}
+
+.modal-content button{
+    width: 20%; /* Ocupar 100% do espaço disponível */
+    margin-bottom: 15px; /* Espaçamento inferior entre os elementos */
+    display: block; /* Exibir em bloco, um embaixo do outro */
+    border-radius: 5%;
+    padding: 10px;  
+    margin: 5% auto;
+    background-color: #f1f587;
+}
+
+/* Fechar botão */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+    clear: both;
+}
+
+h2 {
+    text-align: center;
+    border:white;
+}
+      
+    </style>
+</head>
+<body>
+    <header>
+        <img src="cineD2.png" alt="Imagem logo">
+        <nav> 
+            <a href="login1.html" >LOGIN</a>
+            <a href="cadastro.html" >CADASTRO</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="apresentacao">
+            <div class="imagens-apresentacao">
+                <img src="ACulpaÉdasEstrelas.jpg" alt="Imagem 1">
+                <div class="texto-imagem">Hazel Grace Lancaster e Augustus Waters são dois adolescentes que se conhecem em um grupo de apoio para pacientes com câncer. Por causa da doença, Hazel sempre descartou a ideia de se envolver amorosamente, 
+                    mas acaba cedendo ao se apaixonar por Augustus. Juntos, eles viajam para Amsterdã, onde embarcam em uma jornada inesquecível.</div>
+            </div>
+            <div class="imagens-apresentacao">
+                <img src="Oppenheimer.jpg" alt="Imagem 2">
+                <div class="texto-imagem">O físico J. Robert Oppenheimer trabalha com uma equipe de cientistas durante o Projeto Manhattan, levando ao desenvolvimento da bomba atômica.</div>
+            </div>
+            <div class="imagens-apresentacao">
+                <img src="avatar.jpg" alt="Imagem 3">
+                <div class="texto-imagem">No exuberante mundo alienígena de Pandora vivem os Na'vi, seres que parecem ser primitivos, mas são altamente evoluídos. Como o ambiente do planeta é tóxico, foram criados os avatares, corpos biológicos controlados pela mente humana que se movimentam livremente em Pandora. Jake Sully, um ex-fuzileiro naval paralítico, 
+                    volta a andar através de um avatar e se apaixona por uma Na'vi. Esta paixão leva Jake a lutar pela sobrevivência de Pandora.</div>
+            </div>
+            <div class="imagens-apresentacao">
+                <img src="Vingadores.jpg" alt="imagem 4">
+                <div class="texto-imagem">Após Thanos eliminar metade das criaturas vivas, os Vingadores têm de lidar com a perda de amigos e entes queridos. 
+                    Com Tony Stark vagando perdido no espaço sem água e comida, Steve Rogers e Natasha Romanov lideram a resistência contra o titã louco.</div>
+            </div>
+            <div class="imagens-apresentacao">
+                <img src="HarryPotter.jpg" alt="imagem 5">
+                <div class="texto-imagem">A batalha entre as forças do bem e do mal da magia alcançam o mundo dos trouxas. O risco nunca foi tão grande, e ninguém está seguro. 
+                    Harry Potter precisa fazer um sacrifício final conforme o confronto com Lord Voldemort se aproxima.</div>
+            </div>
+        </div>
+    </main>
+    <div>
+        <h2>Sugestões de Filmes</h2>
+        <div id="sugestoes"></div>
+    </div>
+    <div id="sugerir-container">
+        <button id="sugerir">
+            <img src="adicionar.png" alt="Ícone de sugestão" id="icone-sugestao">Sugerir Filme
+        </button>
+    </div>
+
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <form id="adicionar-filme">
+                <h1>Sugerir Filme</h1>
+                <div>
+                    <input type="text" id="titulo" placeholder="Título do Filme" required>
+                </div>
+                <div>
+                    <label for="sinopse"></label>
+                <input type="text" id="sinopse" placeholder="Sinopse" required>
+                </div>
+                <div>
+                    <select id="genero">
+                        <option value="Selecione:">Selecione o gênero</option>
+                        <option value="Acao">Ação</option>
+                        <option value="Aventura">Aventura</option>
+                        <option value="Comedia">Comédia</option>
+                        <option value="Drama">Drama</option>
+                        <option value="Ficcao Cientifica">Ficção Científica</option>
+                        <option value="Romance">Romance</option>
+                        <option value="Terror">Terror</option>
+                    </select>
+                </div> 
+                <div>
+                    <input type="number" id="avaliacao" placeholder="Sua avaliação (0 a 10)" required max="10" min="0">
+                </div>
+                <div>
+                    <input type="text" id="opiniao" placeholder="Deixe sua opinião sobre o filme" required>
+                </div>
+                <div>
+                    <p>Inserir imagem do filme</p>
+                    <input type="file" id="imagem-filme" name="image">
+                <button type="salvar">Salvar</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <p>2024 Cinediscovery  Sistemas de Informação  Programação III </p>
+    </footer>
+
+    <script>
+   
+   function verificarUsuarioLogado() {
+    return true;
+}
+
+var modal = document.getElementById("myModal");
+
+var btn = document.getElementById("sugerir");
+
+var span = document.getElementsByClassName("close")[0];
+
+btn.onclick = function() {
+    if (verificarUsuarioLogado()) {
+        modal.style.display = "block";
+    } else {
+        alert("Faça login para sugerir um filme.");
+    }
+}
+
+span.onclick = function() {
+    modal.style.display = "none";
+}
+
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+
+let filmes = [];
+
+const loggedInUserId = 1; 
+
+function limparCamposModal() {
+    document.getElementById('titulo').value = '';
+    document.getElementById('sinopse').value = '';
+    document.getElementById('genero').value = 'Selecione:';
+    document.getElementById('avaliacao').value = '';
+    document.getElementById('opiniao').value = '';
+    document.getElementById('imagem-filme').value = ''; 
+}
+
+function adicionarFilme(event) {
+    event.preventDefault();
+
+    const titulo = document.getElementById('titulo').value;
+    const sinopse = document.getElementById('sinopse').value;
+    const genero = document.getElementById('genero').value;
+    const avaliacao = parseInt(document.getElementById('avaliacao').value);
+    const opiniao = document.getElementById('opiniao').value;
+    const image = document.getElementById('imagem-filme').files[0];
+
+    if (titulo && sinopse && genero && avaliacao && opiniao && image) {
+        const reader = new FileReader();
+        reader.readAsDataURL(image);
+        reader.onload = function() {
+            const imageData = reader.result;
+            const novoFilme = {
+                id: Date.now(),
+                userId: loggedInUserId,
+                titulo,
+                sinopse,
+                genero,
+                avaliacao,
+                opiniao,
+                imagem: imageData 
+            };
+            filmes.push(novoFilme);
+            renderizarSugestoes();
+            limparCamposModal(); 
+        };
+    } else {
+        alert('Por favor, preencha todos os campos.');
+    }
+}
+
+
+function renderizarSugestoes() {
+    const sugestoesContainer = document.getElementById('sugestoes');
+    sugestoesContainer.innerHTML = '';
+
+    filmes.forEach(filme => {
+        const filmeElement = document.createElement('div');
+        filmeElement.classList.add('filmeSugerido');
+
+        const conteudoElement = document.createElement('div');
+        conteudoElement.classList.add('conteudo');
+
+        const tituloElement = document.createElement('h3');
+        tituloElement.textContent = filme.titulo;
+        conteudoElement.appendChild(tituloElement);
+
+        const imagemElement = document.createElement('img');
+        imagemElement.src = filme.imagem;
+        imagemElement.alt = filme.titulo;
+        conteudoElement.appendChild(imagemElement);
+
+        const sinopseElement = document.createElement('p');
+        sinopseElement.textContent = filme.sinopse;
+        conteudoElement.appendChild(sinopseElement);
+
+        const generoElement = document.createElement('p');
+        generoElement.textContent = `Gênero: ${filme.genero}`;
+        conteudoElement.appendChild(generoElement);
+
+        const avaliacaoElement = document.createElement('p');
+        avaliacaoElement.textContent = `Avaliação: ${filme.avaliacao}`;
+        conteudoElement.appendChild(avaliacaoElement);
+
+        const opiniaoElement = document.createElement('p');
+        opiniaoElement.textContent = `Opinião do Usuário: ${filme.opiniao}`;
+        conteudoElement.appendChild(opiniaoElement);
+
+        filmeElement.appendChild(conteudoElement);
+
+        const acoesElement = document.createElement('div');
+        acoesElement.classList.add('acoes');
+
+        const editarButton = document.createElement('button');
+        editarButton.textContent = 'Editar';
+        editarButton.onclick = () => editarFilme(filme.id);
+
+        const excluirButton = document.createElement('button');
+        excluirButton.textContent = 'Excluir';
+        excluirButton.onclick = () => confirmarFilmeDeletado(filme.id);
+
+        acoesElement.appendChild(editarButton);
+        acoesElement.appendChild(excluirButton);
+        filmeElement.appendChild(acoesElement);
+
+        sugestoesContainer.appendChild(filmeElement);
+    });
+}
+
+function editarFilme(id) {
+    const filme = filmes.find(filme => filme.id === id);
+    if (filme && loggedInUserId === filme.userId) {
+        const novoTitulo = prompt('Digite o novo título:', filme.titulo);
+        const novaSinopse = prompt('Digite a nova sinopse:', filme.sinopse);
+        const novoGenero = prompt('Digite o novo gênero:', filme.genero);
+        const novaAvaliacao = parseInt(prompt('Digite a nova avaliação:', filme.avaliacao));
+        const novaOpiniao = prompt('Digite sua nova opinião sobre o filme:', filme.opiniao);
+
+        if (novoTitulo !== null && novaSinopse !== null && novoGenero !== null && novaAvaliacao !== null && novaOpiniao !== null) {
+            filme.titulo = novoTitulo;
+            filme.sinopse = novaSinopse;
+            filme.genero = novoGenero;
+            filme.avaliacao = novaAvaliacao;
+            filme.opiniao = novaOpiniao;
+            renderizarSugestoes();
+        } else {
+            alert('Edição feita com sucesso.');
+        }
+    } else {
+        alert('Você não tem permissão para editar este filme ou o filme não existe.');
+    }
+}
+
+
+function deletarFilme(filmeId) {
+    const filmeIndex = filmes.findIndex(filme => filme.id === filmeId);
+    if (filmeIndex !== -1) {
+        filmes.splice(filmeIndex, 1);
+        renderizarSugestoes();
+    }
+}
+
+
+function confirmarFilmeDeletado(id) {
+    const confirmacao = confirm('Tem certeza de que deseja excluir este filme?');
+    if (confirmacao) {
+        deletarFilme(id);
+    }
+}
+
+document.getElementById('adicionar-filme').addEventListener('submit', adicionarFilme);
+
+</script>
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="ProgIII" content="width=device-width, initial-scale=1.0">
+    <title>Bem-Vindo</title>
+    <style>  
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: rgb(23, 24, 25);
+        }
+        #header {
+            background-color: #0f0f0f;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            border: solid white;
+            width: 100%;
+            height: 150px;
+            display: flex; /* torna o header um flex container */
+            justify-content: space-between; /* distribui os itens igualmente */
+            align-items: center;
+        }
+        #dados {
+            text-align: center;
+        }
+        #login {
+            display: inline-block;
+            border: solid white;
+            text-align: center;
+            width: 20%;
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 5px;
+            margin-left: 40%;
+            margin-right: 40%;
+        }
+        .dados {
+            margin-bottom: 10px;
+        }
+        .imagemLogin {
+            text-align: center; /* Centraliza a imagem horizontalmente */
+            margin-bottom: 5%;
+        }
+        .imagemLogin img {
+            width: 100px; /* Defina a largura desejada para a imagem */
+            height:auto ; /* Mantém a proporção da imagem */
+        }
+        label {
+            display: block;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-top:10px;
+            margin-bottom: px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #f1f587;
+            color: rgb(24, 24, 24);
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <header>  
+        <img src="cineD2.png" alt="imagem ao lado na página de cadastro">
+    </header>
+    <form id="login">
+        <div class="dados">
+            <div class="imagemLogin">
+                <img src="usuario.png" alt="imagem usuario">
+            </div>
+            <input type="email" id="email" name="email" placeholder="E-mail" required>
+            <input type="password" id="senha" name="senha" placeholder="Senha" required>
+        </div>
+        <button id="entrar" type="submit">Entrar</button>
+        <div>
+            <button id="criarContaBtn" type="button">Criar uma conta</button>
+        </div>
+    </form>
+
+    <script>
+       document.getElementById("login").addEventListener("submit", function(event) {
+            event.preventDefault();
+            
+            var emailLogin = document.getElementById("email").value;
+            var senhaLogin = document.getElementById("senha").value;
+
+            // Verificar se as credenciais estão corretas no armazenamento local
+            var storedEmail = localStorage.getItem("email");
+            var storedSenha = localStorage.getItem("senha");
+
+            if (emailLogin === storedEmail && senhaLogin === storedSenha) {
+                alert("Bem-vindo!");
+                window.location.href = "Cinediscovery.html"; // Redirecionar para a página da conta do usuário
+            } else {
+                alert("E-mail ou senha incorretos. Por favor, tente novamente.");
+            }
+        });
+
+        document.getElementById("criarContaBtn").addEventListener("click", function(event) {
+            event.preventDefault();
+            
+            // Redirecionar para a página de cadastro
+            window.location.href = "cadastro.html";
+        });
+    </script>
+</body>
+</html>
